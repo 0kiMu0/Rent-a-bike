@@ -1,6 +1,15 @@
 'use client';
 import { useState, useEffect } from 'react';
 
+type Bike = {
+  id: number;
+  name: string;
+  location: string;
+  description: string;
+  status: boolean;
+};
+
+
 export default function Home() {
   const [formData, setFormData] = useState({
     name: '',
@@ -9,7 +18,7 @@ export default function Home() {
     status: false,
   });
 
-  const [bikes, setBikes] = useState<any[]>([]); // Za bicikle koji će biti prikazani
+  const [bikes, setBikes] = useState<Bike[]>([]); // Za bicikle koji će biti prikazani
   const [showForm, setShowForm] = useState(false); // Kontrola prikaza forme
 
   // Funkcija za učitavanje bicikala sa API-a

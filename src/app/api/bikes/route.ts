@@ -22,9 +22,11 @@ export async function POST(req: NextRequest) {
       );
   
       return new Response(JSON.stringify(result.rows[0]), { status: 201 });
-    } catch (err: any) {
-      console.error('Greška u POST /api/bikes:', err.message);
-      return new Response(JSON.stringify({ error: err.message }), { status: 500 });
-    }
+    } catch (err: unknown) {
+        const error = err as Error;
+        console.error('Greška u POST /api/bikes:', error.message);
+        return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+      }
+      
   }
   
