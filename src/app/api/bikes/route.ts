@@ -10,7 +10,7 @@ export async function GET() {
     return new Response('Database error', { status: 500 });
   }
 }
-
+//git push 
 export async function POST(req: NextRequest) {
     try {
       const body = await req.json();
