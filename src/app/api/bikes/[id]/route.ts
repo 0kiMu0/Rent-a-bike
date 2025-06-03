@@ -1,21 +1,12 @@
+import { deleteBikeById } from '@/app/lib/actions';
 import { NextRequest, NextResponse } from 'next/server';
-import pool from '@/app/lib/db';
 
-type Context = {
-  params: {
-    id: string;
-  };
-};
-
-export async function DELETE(req: NextRequest, context: Context) {
-  const { id } = context.params;
-
+export async function DELETE(_: NextRequest, { params }: { params: { id: number } }) {
   try {
-    await pool.query('DELETE FROM bikes WHERE id = $1', [id]);
+    await deleteBikeById(params.id);
     return NextResponse.json({ message: 'Bike deleted' }, { status: 200 });
-  } catch (err: unknown) {
-    const error = err as Error;
-    console.error('Greška u DELETE /api/bikes/[id]:', error.message);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    console.error('Error deleting bike', error);
+    return NextResponse.json({ error: 'Failed to delete bike' }, { status: 500 });
   }
 }
